@@ -14,7 +14,8 @@ import java.sql.*;
 public class MemberRepositoryVO {
 
     public Member save(Member member) throws SQLException {
-        String sql ="insert into member(member_id, money) value(?,?)";
+//        String sql ="insert into member(member_id, money) value(?,?)";
+        String sql ="insert into member(member_id, money) values (?, ?)";
 
         String sql2 = "select * from member";
         Connection connection = null; // 연결
