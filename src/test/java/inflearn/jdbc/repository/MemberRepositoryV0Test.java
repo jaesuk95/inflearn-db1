@@ -5,11 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+class MemberRepositoryV0Test {
 
-class MemberRepositoryVOTest {
-
-    MemberRepositoryVO repositoryVO = new MemberRepositoryVO();
+    MemberRepositoryV0 repositoryVO = new MemberRepositoryV0();
 
     @Test
     void save() throws SQLException {
