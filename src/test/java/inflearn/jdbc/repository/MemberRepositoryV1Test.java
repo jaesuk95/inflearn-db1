@@ -36,7 +36,7 @@ class MemberRepositoryV1Test {
     @Test
     void crud() throws SQLException {
         //save
-        Member member = new Member("memberV100", 10000);
+        Member member = new Member("memberV12", 10000);
         repository.save(member);
 
         //findById
@@ -60,4 +60,9 @@ class MemberRepositoryV1Test {
             e.printStackTrace();
         }
     }
+    // 16:30:09.955 [Test worker] INFO inflearn.jdbc.repository.MemberRepositoryV1 - get connection=HikariProxyConnection@1008612116 wrapping conn0: url=jdbc:h2:~/test user=SA, class=class com.zaxxer.hikari.pool.HikariProxyConnection
+    //16:30:09.956 [Test worker] INFO inflearn.jdbc.repository.MemberRepositoryV1 - get connection=HikariProxyConnection@1779914089 wrapping conn0: url=jdbc:h2:~/test user=SA, class=class com.zaxxer.hikari.pool.HikariProxyConnection
+    //16:30:09.958 [Test worker] INFO inflearn.jdbc.repository.MemberRepositoryV1 - get connection=HikariProxyConnection@254955665 wrapping conn0: url=jdbc:h2:~/test user=SA, class=class com.zaxxer.hikari.pool.HikariProxyConnection
+    //16:30:10.010 [ housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool -  - Pool stats (total=1, active=0, idle=1, waiting=0)
+    // 여기서 conn0 이유는 커넥션이 끝나고 close 하기 때문에 같은 conn0 번만 사용하게 되는 것이다.
 }
