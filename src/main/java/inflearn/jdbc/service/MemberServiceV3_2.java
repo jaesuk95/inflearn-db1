@@ -7,16 +7,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.support.TransactionTemplate;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * 트랜잭션 - 파라미터 연동, 풀을 고려한 종료
+ * 트랜잭션 - 트랜잭션 템플릿
  * */
 @RequiredArgsConstructor
 @Slf4j
-public class MemberServiceV3_1 {
+public class MemberServiceV3_2 {
 
     //    private final DataSource dataSource;
     // 이전에는 DataSource 를 직접 사용했지만
@@ -44,23 +44,29 @@ public class MemberServiceV3_1 {
     * */
     // 트랜잭션 추상화 덕분에 서비스 코드는 이제 JDBC 기술에 의존하지 않는다. 이제 PlatformTransactionManager 에 의존하게 된다. (스프링꺼)
     // 만약 JPA 를 사용할 경우, DataSourceTransactionManager 를 'JpaTransactionManager' 로 변경해준면 된다.
-    private final PlatformTransactionManager transactionManager;
+
+    // 트랜잭션 템플릿 사용
+    // 반복되는 try,catch,finally 없애자
+    private final TransactionTemplate txTemplate;
+//    private final PlatformTransactionManager transactionManager;
     private final MemberRepositoryV3 memberRepositoryV3;
 
+    public MemberServiceV3_2( PlatformTransactionManager transactionManager, MemberRepositoryV3 memberRepositoryV3) {
+        this.txTemplate = new TransactionTemplate(transactionManager);
+        this.memberRepositoryV3 = memberRepositoryV3;
+    }
+
     public void accountTransfer(String fromId, String toId, int money) throws SQLException {
+        // 여기서 try, catch 이유는 executeWithoutResult 가 예외 처리를 던지기 때문에 넣어야 한다
+        // 성공적으로 처리되면 commit, 예외가 터진다 그러면 rollback
+        txTemplate.executeWithoutResult((status) -> {
+            try {
+                bizLogic(fromId,toId,money);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
-        // transaction start
-        // 현재 트랜잭션의 상태 정보가 포함되어 있다. 이후, 트랜잭션을 커밋, 롤백할 때 필요하다
-        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
-
-        try {
-            // 비즈니스 로직
-            bizLogic(fromId, toId, money);
-            transactionManager.commit(status);
-        } catch (Exception e) {
-            transactionManager.rollback(status);
-            throw new IllegalStateException(e);
-        }
     }
 
     private void bizLogic(String fromId, String toId, int money) throws SQLException {
