@@ -1,6 +1,5 @@
 package inflearn.jdbc.service;
 
-import inflearn.jdbc.connection.ConnectionConst;
 import inflearn.jdbc.domain.Member;
 import inflearn.jdbc.repository.MemberRepositoryV1;
 import org.junit.jupiter.api.*;
@@ -10,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.sql.SQLException;
 
 import static inflearn.jdbc.connection.ConnectionConst.*;
-import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * 기본 동작, 트랜잭션 없어서 문제 발생
  * */
