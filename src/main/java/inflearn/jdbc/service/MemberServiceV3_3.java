@@ -50,6 +50,9 @@ public class MemberServiceV3_3 {
     * 스프링이 제공하는 트랜잭션 AOP 를 적용하기 위해 @Transactional 추가
     * springBootTest : 스프링 AOP 를 적용하려면 컨테이너가 필요하다. 이 어노테이션이 있으면 테스트시 스프링 부트를 통해
     * 스프링 컨테이너를 생성한다. 그리고 테스트에서 @AutoWired 등을 통해 스프링 컨테이너가 관리하는 빈들을 사용할 수 있다 .
+    *
+    * 프로그래밍 방식의 트랜잭션 관리는 스프링 컨테이너나 스프링 AOP 기술 없이 간단히 사용할 수 있지만 살무에서는 대부분
+    * 스프링 컨테이너와 스프링 AOP 를 사용하기 때문에 거의 사용되지 않는다.
     * */
 
     private final MemberRepositoryV3 memberRepositoryV3;
