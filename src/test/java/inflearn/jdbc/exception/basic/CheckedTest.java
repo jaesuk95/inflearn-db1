@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Exception 을 상속받은 예외는 체크 예외가 된다
+ * 체크 예외는 RuntimeException 클래스를 상속받지 않은 예외 클래스들이다. 체크 예외는 복구 가능성이 있는 예외 이므로 반드시 예외를
+ * 처리하는 코드를 함께 작성해야 한다. 대포적으로 IOEXCEPTION, SQLException 등이 있으며, 예외를 처리하기 위해서는 catch 문으로 잡거나 throws
+ * 를 통해 메소드 밖으로 던질 수 있다. 만약 예외를 처리하지 않으면 컴파일 에러가 발생한다.
  *
  * 정리
  * 1. Exception 예외를 받은 예외는 체크 예외가 된다

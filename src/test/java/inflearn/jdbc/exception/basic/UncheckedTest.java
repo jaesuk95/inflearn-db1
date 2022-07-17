@@ -5,6 +5,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
+ * RuntimeException 클래스를 상속받는 예외 클래스들은 복구 가능성이 없는 예외들이므로 컴파일러가 예외처리를 강제하지 않는다. 그래서
+ * 언체크 예외라고 불리는데, 언체크 예외는 Error 와 마찬가지로 에러를 처리하지 않아도 컴파일 에러가 발생하지 않는다. 즉, 런타임 예외는 예상치
+ * 못했던 상황에서 발생하는 것이 아니므로 굳이 예외 처리를 강제하지 않는다. RuntimeException 에는 대표적으로 NullPointException 이나
+ * IllegalArgumentException 등과 같은 것들이 있다.
  *
  * 체크 vs 언체크 예외
  * 체크 예외: 예외를 잡아서 처리하지 않으면 항상 Throws 에 던지는 예외를 선언해야 한다
